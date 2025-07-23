@@ -8,6 +8,8 @@ let logout = document.querySelector('.logout')
 let isAuth = localStorage.getItem('token')
 let regg = document.querySelector('.regg')
 let logoutsk = document.querySelector('.logoutsk')
+let selectio = document.querySelector('.selectio')
+let nuts01 = document.querySelector('.nuts01')
 // let showLogOut = true
 
 
@@ -32,16 +34,16 @@ else {
 
 
 
-allbtn.addEventListener('click',()=>{
+allbtn.addEventListener('click', () => {
     fetch('https://restaurant.stepprojects.ge/api/Products/GetAll')
-    .then(resp => resp.json())
-    .then(productss => {
-        console.log(productss)
-        randerHtml(productss)
+        .then(resp => resp.json())
+        .then(productss => {
+            console.log(productss)
+            randerHtml(productss)
 
 
 
-    })
+        })
 })
 function randerHtml(dataarr) {
     cards.innerHTML = ''
@@ -54,15 +56,12 @@ function randerHtml(dataarr) {
             </div>
             <h2>${el.name}</h2>
             <h3>Spiciness: </h3>
-            <div class="vegans">
-                <p>nuts</p>
-                <p>vegan</p>
-            </div>
+            
             <div class='prais and addcart'>
                 <div class="praise">
                     <h2>${el.price}$</h2>
                 </div>
-                <div class="adds"><button class="btn">Add to cart</button></div>
+                <div class="adds"><button class="btn" onclick = 'addtocart(${el.price},${el.id},1)'>Add to cart</button></div>
                  </div>
                  </div>
 
@@ -73,6 +72,29 @@ function randerHtml(dataarr) {
 }
 
 
+function addtocart(price, id, ammount) {
+    fetch(`https://restaurant.stepprojects.ge/api/Baskets/AddToBasket
+`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+
+        },
+        body: JSON.stringify({
+
+
+            "quantity": ammount,
+            "price": price,
+            "productId": id,
+        }
+        )
+    }).then(resp => resp.json()).then(resp => console.log(resp))
+
+
+    console.log(price, id, ammount)
+
+}
+
 function GetAlcategorias(categoriesarr) {
     categoriesarr.forEach(el => {
         button11.innerHTML += `
@@ -81,6 +103,8 @@ function GetAlcategorias(categoriesarr) {
 
     })
 }
+
+
 
 ///////////////category///////////
 
@@ -101,15 +125,15 @@ function rendetBtns(arr) {
         btn.innerHTML = el.name
         btn.classList.add('btncategory1')
         btn.classList.add('btncategory2')   ////gasastili
-        btn.addEventListener('click',()=>{
+        btn.addEventListener('click', () => {
             fetch(`https://restaurant.stepprojects.ge/api/Categories/GetCategory/${el.id}`)
-            .then(resp => resp.json())
-            .then(resp =>{
-                console.log(resp)
-                randerHtml(resp.products)
-            })
+                .then(resp => resp.json())
+                .then(resp => {
+                    console.log(resp)
+                    randerHtml(resp.products)
+                })
 
-            
+
 
 
         })
@@ -126,4 +150,52 @@ function rendetBtns(arr) {
 logout.addEventListener('click', () => {
     localStorage.removeItem('token')
     window.location.reload()
+})
+
+
+
+
+/////////////////////////
+////
+
+
+
+
+
+
+
+
+
+////select>>>>
+
+selectio.addEventListener('change', function name() {
+    if (selectio.value !== '') {
+
+        fetch(`https://restaurant.stepprojects.ge/api/Products/GetFiltered?vegeterian=${selectio.value}
+`).then(resp => resp.json())
+            .then(resp => {
+                randerHtml(resp)
+
+            })
+
+
+    }
+})
+
+
+
+
+
+nuts01.addEventListener('change', function name() {
+    if (nuts01.value !== '') {
+
+        fetch(`https://restaurant.stepprojects.ge/api/Products/GetFiltered?nuts=${nuts01.value}
+`).then(resp => resp.json())
+            .then(resp => {
+                randerHtml(resp)
+
+            })
+
+
+    }
 })

@@ -74,6 +74,7 @@ header {
 
 
 .minen {
+    
     width: 100%;
     padding: 20px;
     gap: 20px;
@@ -86,7 +87,7 @@ header {
 .card {
 
     width: 250px;
-    height: 450px;
+    height: 430px;
     background-color:beige;
     border-radius: 30px;
     margin-top: 10px;
@@ -179,4 +180,11 @@ header {
     color: aliceblue;
     background-color: black;
 }
+
+.option1{
+    text-align: center;
+}
+   .selectio option{
+    text-align: center;
+   }
 

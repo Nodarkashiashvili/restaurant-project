@@ -60,7 +60,36 @@ h2 {
     justify-content: center;
 }
 .filterdiv{
-    width: 100%;
+    width: 400px;
     height: 100px;
-    background-color: aqua;
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    /* border: 2px solid rgb(209, 12, 12); */
+    border-radius: 10px;
+
 }
+.motherfilterdiv
+{
+    display: flex;
+    justify-content: center;
+    
+}
+.nuts01{
+    width: 100px;
+    height: 30px;
+    background-color: black;
+    color: aliceblue;
+    border-radius: 15px;
+}
+
+
+.selectio{ width: 150px;
+    height: 30px;
+    background-color: black;
+    color: aliceblue;
+    border-radius: 15px;}
