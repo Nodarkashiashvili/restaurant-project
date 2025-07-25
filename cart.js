@@ -5,6 +5,8 @@ let minus01 = document.querySelector('.minus01')
 
 
 
+
+
 fetch(`https://restaurant.stepprojects.ge/api/Baskets/GetAll`)
     .then(resp => resp.json())
     .then(resp => {
@@ -14,7 +16,9 @@ fetch(`https://restaurant.stepprojects.ge/api/Baskets/GetAll`)
     })
 
 function cartshtml(arr) {
+    let i = 0;
     arr.forEach(el => {
+        console.log(el);
         cartmain.innerHTML += `
         <div class="prodcard">
             <div class="detele">
@@ -36,14 +40,14 @@ function cartshtml(arr) {
             </div>
             
             <div class="plusminys">
-                <button class="plus01" onclick='up(${el.price},${el.quantity},${el.product.id})'>+</button>
+                <button class="plus01" onclick='up(${el.price},${el.quantity},${el.product.id},${i})'>+</button>
                 <button class="minus01" onclick='down(${el.price},${el.quantity},${el.product.id})'>-</button>
             </div>
             <div class="divsum">
 
             </div>
             <div class="getorders">
-                <h5>total: ${el.price}</h5>
+                <h5>total: <span id="totalprice_${i}">${el.price}</span></h5>
                 <div class="linerskss"></div>
                 <button class="butgetorders">Get Order</button>
             
@@ -55,13 +59,20 @@ function cartshtml(arr) {
         </div>
 
     `
+    i++;
 
     });
 
 
 }
-function up (price, quantity, productId) {
-    console.log(price, quantity, productId)
+
+
+function up (price, quantity, productId,i) {
+    let totalPriceElement = document.getElementById("totalprice_"+i);
+let currentPrice = parseFloat(totalPriceElement.innerHTML);
+console.log(currentPrice);
+
+
     fetch (`https://restaurant.stepprojects.ge/api/Baskets/UpdateBasket`, {
         method: 'PUT',
         headers: {
@@ -69,8 +80,6 @@ function up (price, quantity, productId) {
 
         },
         body: JSON.stringify({
-            
-                
                 "quantity": quantity+1,
                 "price": price,
                 "productId": productId,
@@ -79,8 +88,11 @@ function up (price, quantity, productId) {
         })
     }).then(resp => resp.text())
         .then(resp => {
+            let updatedTotalPrice = currentPrice + price;
+            console.log(updatedTotalPrice);
+            totalPriceElement.innerHTML = updatedTotalPrice;
             console.log(resp)
-            window.location.reload()
+            //window.location.reload()
         })
 
     
