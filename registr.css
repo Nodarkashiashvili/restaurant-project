@@ -66,6 +66,11 @@ header {
     
 
 }
+.regbtns0001:hover{
+    background-color: red;
+
+
+}
 .phoneNumber{
     width: 100px;
     height: 30px;
@@ -78,6 +83,8 @@ header {
 .btnregistr{
     width: 100px;
     height: 30px;
+    background-color: black;
+    color: aliceblue;
 }
 .registrac001{
     color: aliceblue;
