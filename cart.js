@@ -2,9 +2,14 @@
 let cartmain = document.querySelector('.cartmain')
 let plus01 = document.querySelector('.plus01')
 let minus01 = document.querySelector('.minus01')
+let logout = document.querySelector('.logout')
 
 
+let token = localStorage.getItem('token')
+if(token==undefined  || token == null){
 
+window.location.href='login.html'
+}
 
 
 fetch(`https://restaurant.stepprojects.ge/api/Baskets/GetAll`)
@@ -148,7 +153,10 @@ function deleteProduct(productId) {
 
 }
 
-
+logout.addEventListener('click', () => {
+    localStorage.removeItem('token')
+    window.location.href='restorant.html'
+})
 
 
 
